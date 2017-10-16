@@ -1,4 +1,4 @@
-Arguments: 
+﻿Arguments: 
   C:\Program Files\nodejs\node.exe C:\Users\windows\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js info webpack
 
 PATH: 
@@ -35,7 +35,7 @@ npm manifest:
       "less": "^2.7.2",
       "less-loader": "^4.0.3",
       "node-sass": "^4.5.2",
-      "sass-loader": "^6.0.3",
+     "sass-loader": "^6.0.3",
       "style-loader": "^0.16.1",
       "url-loader": "^0.5.8",
       "vue-loader": "^11.3.4",
