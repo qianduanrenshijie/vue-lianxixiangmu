@@ -1,10 +1,12 @@
 <template lang="html">
     <div class="temp">
-        <mt-swipe :auto="4000">
+        <!-- <mt-swipe :auto="4000">
 			<mt-swipe-item v-for="item in list" :key="item.id">
 				<img :src='item.img'>
 			</mt-swipe-item>
-		</mt-swipe>
+		</mt-swipe> -->
+		<slider :imgs="list"></slider>	
+
 		<div class="mui-content">
 			<ul class="mui-table-view mui-grid-view mui-grid-9">
 			    <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
@@ -20,7 +22,7 @@
 			        </router-link>
 			    </li>
 			    <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-			    	<router-link to="#">
+			    	<router-link to="/goods/goodspro">
 			        	<span class="mui-icon mui-icon-chatbubble"></span>
 			            <div class="mui-media-body">商品购买</div>
 			        </router-link>
@@ -51,8 +53,12 @@
 <script>
 	//提示信息
 	import { Toast } from 'mint-ui';
-	import common from '../kits/common.js'
+	import common from '../kits/common.js';
+	import slider from './subcom/slider.vue';
 	export default {
+		components:{
+			slider
+		},
 		data(){
 			return{
 				list:[],
@@ -78,16 +84,7 @@
 </script>
 
 <style scoped>  /*scoped去除全局样式*/
-	.temp .mint-swipe{
-		height:200px;
-	}
-	.mint-swipe-item img{
-		width: 100%;
-	}
-	.mint-swipe-item{
-        width: 100%;
-        height: 300px;
-    }
+	
 
     .mui-grid-view.mui-grid-9,.mui-content,.mui-content ul{
 		background-color: #fff !important;

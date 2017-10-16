@@ -19,6 +19,10 @@ import news from './components/news/newslist.vue';//导入新闻列表
 import newinfos from './components/news/newinfos.vue';//导入新闻内容
 import imgshare from './components/imgshare/imgshare.vue';//图片分享
 import imginfos from './components/imgshare/imginfos.vue';//图片分享
+import goodspro from './components/goods/goodspro.vue';//商品购买
+import goodsinfo from './components/goods/goodsinfo.vue';//商品详情
+import goodcentos from './components/goods/goodcentos.vue';//商品详情的图文详解
+import goodprocomment from './components/goods/goodprocomment.vue';//商品详情的商品评论
 
 
 // 3.0.2 定义路由规则
@@ -32,6 +36,10 @@ var router1 = new vueRouter({
 			{path:'/news/newinfos/:id',component:newinfos},
 			{path:'/imgshare/allimg',component:imgshare},
 			{path:'/imgshare/imginfos/:id',component:imginfos},
+			{path:'/goods/goodspro',component:goodspro},
+			{path:'/goods/goodsinfo/:id',component:goodsinfo},
+			{path:'/goods/goodcentos/:id',component:goodcentos},
+			{path:'/goods/goodprocomment/:id',component:goodprocomment},
 		]
 	});
 
