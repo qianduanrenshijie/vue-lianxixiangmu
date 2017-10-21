@@ -1,41 +1,49 @@
 <template>
 	<div >
 		<span class="subtract" @click="subtract()">-</span>
-		<span class="num" v-text='num'></span>
+		<span class="num" v-text='initCount'></span>
 		<span class="add" @click="add()">+</span>
 	</div>
 </template>
 <script>
+	
 	export default{
+		props:['initCount','goodsid'],
 		data(){
 			return {
-				num:1,
+				count:1,
+				resObj:{goodsid:0,type:'add'}
 			}
+		},
+		created:function () {
+			this.count = this.initCount;
 		},
 		methods:{
 			add:function () {
-				this.num++;
-				this.sendmessage()
+				this.count++;
+				this.sendmessage('add')
 			},
 			subtract:function () {
-				this.num--
-				if(this.num < 1){
-					this.num = 1
+				this.count--
+				if(this.count < 1){
+					this.count = 1
 				};
-				this.sendmessage()
+				this.sendmessage('subtract')
 			},
 			//子级向夫级传数据
-			sendmessage(){
-				this.$emit('objdata',this.num)
+			sendmessage(type){
+				this.resObj.goodsid = this.goodsid;
+				this.resObj.type = type;
+				this.$emit('carobjdata',this.resObj);
 			}
 		},
 		
 	}
 </script>
 <style>
-	.regulation span{
+	.bottom span{
 		display: inline-block;
-		width: 40px;
+		width: 30px;
 		height: 25px;
 		border: 1px solid #000;
 		float: left;

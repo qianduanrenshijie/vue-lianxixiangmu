@@ -16,11 +16,13 @@
 					<div class="sum">
 						<span>
 							购买数量：
-							<regulation></regulation>
+							<regulation v-on:objdata="getcount" class="regulation"></regulation>
 						</span>
+						<!-- 添加购物车小动画 -->
+						<div v-if="isshow" class="ball"></div>
 					</div>
 					<mt-button type="primary">立即购买</mt-button>
-					<mt-button type="danger">加入购物车</mt-button>
+					<mt-button type="danger" @click="toshopcar">加入购物车</mt-button>
 				</div>
 			</div>
 			<div class="border">
@@ -54,7 +56,12 @@
 	import { Toast } from 'mint-ui';
 	import common from '../../kits/common.js';
 	import slider from '../subcom/slider.vue';
-	import regulation from '../subcom/proamount.vue'
+	import regulation from '../subcom/proamount.vue';
+	//第三方传值
+	import {vm,COUNTSTR} from "../../kits/vm.js";
+	//localStorage存储和获取数据封装调用
+	import {setItem,valueObj} from '../../kits/localStorage.js';
+
 	export default{
 		components:{
 			slider,
@@ -65,6 +72,9 @@
 				id:0,
 				list:[],
 				proinfo:{},
+				//商品数量
+				inputNumberCount:1,
+				isshow:false,
 			}
 		},
 		methods:{
@@ -89,17 +99,37 @@
 					}
 					this.proinfo = data.message[0]
 				})
+			},
+			//获取子组件商品熟量的
+			getcount(count){
+				this.inputNumberCount = count;
+				// console.log(this.inputNumberCount);
+			},
+			//向购物车中传商品数量
+			toshopcar:function () {
+				vm.$emit(COUNTSTR,this.inputNumberCount);
+
+				//获取存储数据
+				valueObj.goodsId = this.id;
+				valueObj.count = this.inputNumberCount;
+				setItem(valueObj);
 			}
 		},
 		created:function () {
 			this.id = this.$route.params.id;
 			this.getimginfos();
-			this.getproinfo()
+			this.getproinfo();
+			
 		}
 
 	}
 </script>
 <style>
+	.regulation{
+		position: absolute;
+		bottom: -2px;
+		left: 100px;
+	}
 	.temp .box{
 		padding-top: 5px;
 	} 
@@ -141,5 +171,18 @@
 	}
 	.btn .btnDetail{
 		margin-bottom: 20px;
+	}
+
+/*添加购物车动画*/
+	.ball{
+		background-color: red;
+		height: 20px;
+		width: 20px;
+		border-radius: 50%;
+		position: absolute;
+		left:160px;
+		top:2px;
+		transition: all 0.4s ease;
+		z-index: 100;
 	}
 </style>

@@ -3,7 +3,9 @@
 	<div>
 		<!-- 顶部 -->
 		<mt-header fixed title="固定在顶部"></mt-header>
-
+		<div class="back" v-if="isshow">
+			<a href="javascript:;" @click = "backpage">返回</a>
+		</div>
 		<!-- 底部 -->
 		<nav class="mui-bar mui-bar-tab">
 			<router-link class="mui-tab-item" to="/Home">
@@ -16,9 +18,9 @@
 			</router-link>
 			<router-link class="mui-tab-item" to="/shopcar/car">
 				<span class="mui-icon mui-icon-contact">
-					<span class="mui-badge">0</span>
+					<span class="mui-badge" id="badge">0</span>
 				</span>
-				<span class="mui-tab-label">通讯录</span>
+				<span class="mui-tab-label">购物车</span>
 			</router-link>
 			<router-link class="mui-tab-item" to="/shezhi">
 				<span class="mui-icon mui-icon-gear"></span>
@@ -33,18 +35,38 @@
 </template>
 
 <script>
-// 按需导入
+	import {vm,COUNTSTR} from './kits/vm.js';
+	// 利用 vm.$on() 来注册 COUNT这个常量代表的事件
+	vm.$on(COUNTSTR,function(count){
+//		1.0 将count值追加到购物车中
+		var badgeobj = document.querySelector('#badge');
+		badgeobj.innerText = parseInt(badgeobj.innerText) + count;
+	});
 
-	// 负责导出 .vue这个组件对象(它本质上是一个Vue对象,所以Vue中该定义的元素都可以使用)
-	// function add(x,y){console.log(x+y)}	
-	// module.exports = {  //es5的导出对象的写法
+
 	export default{  // es6的导出对象的写法
+
+
 		data(){  //等价于 es5的 data:function(){
 			return {
-				msg :'hello vuejs1111112444'
+				isshow : false,
+			}
+		},
+		watch:{
+			'$route':function (newroute,oldroute) {
+				if(newroute.path.toLowerCase() == '/home'){
+					console.log(1)
+					this.isshow = false;
+				}else{
+					console.log(2)
+					this.isshow = true;
+				}
 			}
 		},
 		methods:{
+			backpage:function () {
+				this.$router.go(-1)
+			}
 		},
 		created(){
 
@@ -54,7 +76,13 @@
 
 <style scoped>
 /*当前页面的css样式写到这里，其中scoped表示这个里面写的css代码只是在当前组件页面上有效，不会去影响到其他组件页面*/
-	.red{
-		color: red;
+	.back{
+		position: absolute;
+		top: 10px;
+		left: 10px;
+		z-index: 999;
+	}
+	.back a{
+		color: #fff;
 	}
 </style>
